@@ -28,6 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  Blogs.associate = (models) => {
+    Blogs.hasMany(models.Comments, {
+      onDelete: "CASCADE",
+    });
+  };
 
   return Blogs;
 };
