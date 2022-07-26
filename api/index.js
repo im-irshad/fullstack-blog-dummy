@@ -7,9 +7,11 @@ app.use(express.json());
 // Routers
 const blogRouter = require("./routes/Blogs");
 const commentRouter = require("./routes/Comments");
+const userRouter = require("./routes/Users");
 
 app.use("/api/blogs", blogRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/users", userRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(5000, () => {
