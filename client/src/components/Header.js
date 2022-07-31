@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import { Button, IconButton, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 
 function Header({ sections, title }) {
   return (
@@ -33,11 +33,11 @@ function Header({ sections, title }) {
       >
         {sections.map((section) => (
           <Link
+            to={section.url}
+            key={section.title}
             color="inherit"
             noWrap
-            key={section.title}
             variant="body2"
-            href={section.url}
             sx={{ p: 1, flexShrink: 0 }}
           >
             {section.title}
