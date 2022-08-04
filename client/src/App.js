@@ -7,6 +7,8 @@ import {
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 import Culture from "./pages/Culture";
 import Technolog from "./pages/Tech";
@@ -18,6 +20,7 @@ import Science from "./pages/Science";
 import Health from "./pages/Health";
 import Style from "./pages/Style";
 import Travel from "./pages/Travel";
+import CreateBlog from "./pages/CreateBlog";
 
 const sections = [
   { title: "Technology", url: "./Tech" },
@@ -53,6 +56,9 @@ function App() {
             <Route path="/Health" element={<Health />} />
             <Route path="/Style" element={<Style />} />
             <Route path="/Travel" element={<Travel />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/newblog" element={<CreateBlog />} />
           </Routes>
         </BrowserRouter>
       </Container>
