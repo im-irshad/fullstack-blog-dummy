@@ -14,7 +14,6 @@ function Header({ sections, title }) {
           variant="h5"
           color="inherit"
           align="center"
-          noWrap
           sx={{ flex: 1 }}
         >
           {title}
@@ -36,7 +35,6 @@ function Header({ sections, title }) {
             to={section.url}
             key={section.title}
             color="inherit"
-            noWrap
             variant="body2"
             sx={{ p: 1, flexShrink: 0 }}
           >

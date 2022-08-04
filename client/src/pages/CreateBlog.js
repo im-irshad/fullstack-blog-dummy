@@ -4,14 +4,18 @@ import * as Yup from "yup";
 import {
   Button,
   CssBaseline,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { Box, Container } from "@mui/system";
 const validationSchema = Yup.object({
   title: Yup.string().required("Required"),
-  Category: Yup.string().required("Required"),
+  category: Yup.string().required("Required"),
   description: Yup.string().required("Required"),
 });
 
@@ -19,7 +23,7 @@ function CreateBlog() {
   const formik = useFormik({
     initialValues: {
       title: "",
-      Category: "",
+      category: "category",
       description: "",
     },
     validationSchema,
@@ -28,7 +32,7 @@ function CreateBlog() {
     },
   });
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
       <CssBaseline />
       <Box
         sx={{
@@ -41,9 +45,19 @@ function CreateBlog() {
         <Typography component="h1" variant="h5">
           Add Blog
         </Typography>
-        <Box component="form" noValidate onSubmit={formik.handleSubmit}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={formik.handleSubmit}
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Grid container spacing={2}>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 label="Title"
@@ -56,22 +70,32 @@ function CreateBlog() {
                 helperText={formik.touched.title && formik.errors.title}
               />
             </Grid>
-            <Grid item>
-              <TextField
-                label="Category"
-                name="Category"
+            <Grid item xs={12} sm={12}>
+              <Select
+                variant="outlined"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                fullWidth
+                name="category"
+                label="category"
                 onChange={formik.handleChange}
-                value={formik.values.Category}
-                error={
-                  formik.touched.Category && formik.errors.Category
-                    ? true
-                    : false
-                }
-                helperText={formik.touched.Category && formik.errors.Category}
-              />
+                value={formik.values.category}
+              >
+                <MenuItem value="category">Select Category</MenuItem>
+                <MenuItem value="Technology">Technology</MenuItem>
+                <MenuItem value="Business">Business</MenuItem>
+                <MenuItem value="Politics">Politics</MenuItem>
+                <MenuItem value="Style">Style</MenuItem>
+                <MenuItem value="Design">Design</MenuItem>
+                <MenuItem value="Health">Health</MenuItem>
+                <MenuItem value="Science">Science</MenuItem>
+                <MenuItem value="Culture">Culture</MenuItem>
+              </Select>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
+                multiline
+                rows={8}
                 fullWidth
                 label="Description"
                 name="description"
@@ -87,10 +111,10 @@ function CreateBlog() {
                 }
               />
             </Grid>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
           </Grid>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
         </Box>
       </Box>
     </Container>
