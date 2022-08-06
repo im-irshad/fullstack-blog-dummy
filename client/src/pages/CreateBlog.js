@@ -1,7 +1,9 @@
 import React from "react";
+import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
+  Alert,
   Button,
   CssBaseline,
   FormControl,
@@ -20,6 +22,8 @@ const validationSchema = Yup.object({
 });
 
 function CreateBlog() {
+  const [status, setStatus] = React.useState("");
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -29,6 +33,12 @@ function CreateBlog() {
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
+      axios.post("http://localhost:5000/api/blogs/new", values).then((res) => {
+        setStatus("Blog created successfully");
+        console.log(status);
+        //values = formik.initialValues;
+        // console.log(values);
+      });
     },
   });
   return (
@@ -45,6 +55,11 @@ function CreateBlog() {
         <Typography component="h1" variant="h5">
           Add Blog
         </Typography>
+        {status && (
+          <Alert variant="filled" severity="success">
+            {status}
+          </Alert>
+        )}
         <Box
           component="form"
           noValidate
@@ -90,6 +105,11 @@ function CreateBlog() {
                 <MenuItem value="Health">Health</MenuItem>
                 <MenuItem value="Science">Science</MenuItem>
                 <MenuItem value="Culture">Culture</MenuItem>
+                error=
+                {formik.touched.category && formik.errors.category
+                  ? true
+                  : false}
+                helperText={formik.touched.category && formik.errors.category}
               </Select>
             </Grid>
             <Grid item xs={12} sm={12}>
