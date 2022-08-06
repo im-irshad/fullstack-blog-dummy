@@ -2,12 +2,16 @@ import React from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import CloseIcon from "@mui/icons-material/Close";
+
 import {
   Alert,
   Button,
+  Collapse,
   CssBaseline,
   FormControl,
   Grid,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -23,6 +27,7 @@ const validationSchema = Yup.object({
 
 function CreateBlog() {
   const [status, setStatus] = React.useState("");
+  const [open, setOpen] = React.useState(true);
 
   const formik = useFormik({
     initialValues: {
@@ -31,13 +36,15 @@ function CreateBlog() {
       description: "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, action) => {
       console.log(values);
       axios.post("http://localhost:5000/api/blogs/new", values).then((res) => {
         setStatus("Blog created successfully");
         console.log(status);
-        //values = formik.initialValues;
-        // console.log(values);
+        action.resetForm({
+          values: { title: "", category: "category", description: "" },
+        });
+        setOpen(true);
       });
     },
   });
@@ -56,9 +63,25 @@ function CreateBlog() {
           Add Blog
         </Typography>
         {status && (
-          <Alert variant="filled" severity="success">
-            {status}
-          </Alert>
+          <Collapse in={open}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+              sx={{ mb: 2 }}
+            >
+              Close me!
+            </Alert>
+          </Collapse>
         )}
         <Box
           component="form"
