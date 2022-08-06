@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   res.json(listOfBlogs);
 });
 
-router.post("/", async (req, res) => {
+router.post("/new", async (req, res) => {
   const blog = req.body;
   await Blogs.create(blog);
   res.json(blog);
