@@ -12,6 +12,11 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import { Alert, Collapse, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Copyright(props) {
   return (
@@ -34,14 +39,47 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [status, setStatus] = React.useState("");
+  const [open, setOpen] = React.useState(true);
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   };
+  const validationSchema = Yup.object({
+    name: Yup.string().min(3).max(15).required("Required"),
+    email: Yup.string().email("Not a Proper email").required("Required"),
+    password: Yup.string().min(6).max(20).required("Required"),
+    confirmPassword: Yup.string()
+      .min(6)
+      .when("password", {
+        is: (val) => (val && val.length > 0 ? true : false),
+        then: Yup.string().oneOf(
+          [Yup.ref("password")],
+          "Both password need to be the same"
+        ),
+      })
+      .required("Confirm Password Required"),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values, action) => {
+      console.log(values);
+      axios
+        .post("http://localhost:5000/api/users/signup", values)
+        .then((res) => {
+          setStatus("User created successfully");
+          console.log(res);
+          action.resetForm({
+            values: { name: "", email: "", password: "", confirmPassword: "" },
+          });
+          setOpen(true);
+        });
+    },
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -61,34 +99,50 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          {status && (
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2 }}
+              >
+                {status}
+              </Alert>
+            </Collapse>
+          )}
           <Box
             component="form"
+            onSubmit={formik.handleSubmit}
             noValidate
-            onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Full Name"
                   autoFocus
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                  error={formik.errors.name}
+                  helperText={formik.errors.name}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -97,6 +151,10 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  error={formik.errors.email}
+                  helperText={formik.errors.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -108,14 +166,25 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  error={formik.errors.password}
+                  helperText={formik.errors.password}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="confirm-password"
+                  onChange={formik.handleChange}
+                  value={formik.values.confirmPassword}
+                  error={formik.errors.confirmPassword}
+                  helperText={formik.errors.confirmPassword}
                 />
               </Grid>
             </Grid>
