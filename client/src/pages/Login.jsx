@@ -12,6 +12,9 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import * as Yup from "yup";
+import axios from "axios";
+import { useFormik } from "formik";
 
 function Copyright(props) {
   return (
@@ -34,14 +37,37 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const [status, setStatus] = React.useState("");
+  const [open, setOpen] = React.useState(true);
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   };
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Not a Proper email").required("Required"),
+    password: Yup.string().min(6).max(20).required("Required"),
+  });
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values, action) => {
+      console.log(values);
+      axios
+        .post("http://localhost:5000/api/users/login", values)
+        .then((res) => {
+          setStatus("User created successfully");
+          console.log(res);
+          action.resetForm({
+            values: { email: "", password: "" },
+          });
+          setOpen(true);
+        });
+    },
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -82,7 +108,7 @@ export default function Login() {
             <Box
               component="form"
               noValidate
-              onSubmit={handleSubmit}
+              onSubmit={formik.handleSubmit}
               sx={{ mt: 1 }}
             >
               <TextField
@@ -94,6 +120,10 @@ export default function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                error={formik.errors.email}
+                helperText={formik.errors.email}
               />
               <TextField
                 margin="normal"
@@ -104,18 +134,19 @@ export default function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                error={formik.errors.password}
+                helperText={formik.errors.password}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Log In
               </Button>
               <Grid container>
                 <Grid item xs>
