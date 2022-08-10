@@ -12,8 +12,8 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { name, password } = req.body;
-  const user = await Users.findOne({ where: { name } });
+  const { email, password } = req.body;
+  const user = await Users.findOne({ where: { email } });
   if (user && (await bcrypt.compare(password, user.password))) {
     const token = sign({ userId: user.id }, "secretdummykey", {
       expiresIn: "1h",

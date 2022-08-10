@@ -40,10 +40,8 @@ export default function Login() {
   const [status, setStatus] = React.useState("");
   const [open, setOpen] = React.useState(true);
   const initialValues = {
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
@@ -59,6 +57,7 @@ export default function Login() {
       axios
         .post("http://localhost:5000/api/users/login", values)
         .then((res) => {
+          console.log(res);
           setStatus("User created successfully");
           console.log(res);
           action.resetForm({
