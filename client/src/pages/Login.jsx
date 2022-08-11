@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import * as Yup from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
+import { Alert, Collapse, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Copyright(props) {
   return (
@@ -58,11 +60,17 @@ export default function Login() {
         .post("http://localhost:5000/api/users/login", values)
         .then((res) => {
           console.log(res);
-          setStatus("User created successfully");
-          console.log(res);
-          action.resetForm({
-            values: { email: "", password: "" },
-          });
+          if (res.data.error) {
+            setStatus(res.data.error);
+          } else {
+            setStatus("Login Successful");
+            localStorage.setItem("token", res.data.token);
+
+            console.log(res);
+            action.resetForm({
+              values: { email: "", password: "" },
+            });
+          }
           setOpen(true);
         });
     },
@@ -104,6 +112,27 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            {status && (
+              <Collapse in={open}>
+                <Alert
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  {status}
+                </Alert>
+              </Collapse>
+            )}
             <Box
               component="form"
               noValidate
