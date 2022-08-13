@@ -3,10 +3,13 @@ import Toolbar from "@mui/material/Toolbar";
 import { Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 function Header({ sections, title }) {
   const location = useLocation();
   const path = location.pathname;
-  console.log(path);
+  const { authState } = useContext(AuthContext);
+  console.log(authState);
   return (
     <Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>

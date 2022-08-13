@@ -16,9 +16,13 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await Users.findOne({ where: { email } });
   if (user && (await bcrypt.compare(password, user.password))) {
-    const token = sign({ userId: user.id }, "secretdummykey", {
-      expiresIn: "1h",
-    });
+    const token = sign(
+      { userId: user.id, email: user.email },
+      "secretdummykey",
+      {
+        expiresIn: "1h",
+      }
+    );
     res.json({ token });
   } else {
     res.status(401).json({ message: "Invalid credentials" });
@@ -26,7 +30,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/auth", validateToken, (req, res) => {
-  res.json({ userId: req.user });
+  res.json({ userId: req.user, email: req.email });
 });
 
 module.exports = router;

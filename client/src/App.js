@@ -58,14 +58,15 @@ function App() {
         if (response.data.error) {
           setAuthState({ ...authState, status: false });
         } else {
+          console.log(response.data.email);
           setAuthState({
             email: response.data.email,
-            id: response.data.id,
+            id: response.data.userId,
             status: true,
           });
         }
       });
-  }, [authState]);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
