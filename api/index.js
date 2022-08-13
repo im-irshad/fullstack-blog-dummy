@@ -11,6 +11,7 @@ const blogRouter = require("./routes/Blogs");
 const commentRouter = require("./routes/Comments");
 const userRouter = require("./routes/Users");
 
+app.use("/auth", userRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/comments", commentRouter);
 app.use("/api/users", userRouter);

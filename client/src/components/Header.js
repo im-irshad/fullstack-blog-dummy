@@ -21,7 +21,12 @@ function Header({ sections, title }) {
           {title}
         </Typography>
 
-        <Button variant="outlined" size="small" href="/login">
+        <Button
+          variant="outlined"
+          size="small"
+          href="/login"
+          sx={{ marginRight: "1%" }}
+        >
           Login
         </Button>
         <Button variant="outlined" size="small" href="signup">

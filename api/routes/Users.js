@@ -3,6 +3,7 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middlewares/AuthMware");
 
 router.post("/signup", async (req, res) => {
   const user = req.body;
@@ -22,6 +23,10 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(401).json({ message: "Invalid credentials" });
   }
+});
+
+router.get("/auth", validateToken, (req, res) => {
+  res.json({ userId: req.user });
 });
 
 module.exports = router;
