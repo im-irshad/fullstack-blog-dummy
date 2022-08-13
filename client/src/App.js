@@ -21,6 +21,9 @@ import Health from "./pages/Health";
 import Style from "./pages/Style";
 import Travel from "./pages/Travel";
 import CreateBlog from "./pages/CreateBlog";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "./context/AuthContext";
 
 const sections = [
   { title: "Technology", url: "./Tech" },
@@ -38,31 +41,64 @@ const sections = [
 const theme = createTheme();
 
 function App() {
+  const [authState, setAuthState] = useState({
+    email: "",
+    id: "",
+    status: false,
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            email: response.data.email,
+            id: response.data.id,
+            status: true,
+          });
+        }
+      });
+  }, [authState]);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setAuthState({ email: "", id: 0, status: false });
+  };
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <BrowserRouter>
-          <Header title="Blog" sections={sections} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/Culture" element={<Culture />} />
-            <Route path="/Tech" element={<Technolog />} />
-            <Route path="/Business" element={<Business />} />
-            <Route path="/Design" element={<Design />} />
-            <Route path="/Politics" element={<Politics />} />
-            <Route path="/Opinion" element={<Opinion />} />
-            <Route path="/Science" element={<Science />} />
-            <Route path="/Health" element={<Health />} />
-            <Route path="/Style" element={<Style />} />
-            <Route path="/Travel" element={<Travel />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/newblog" element={<CreateBlog />} />
-          </Routes>
-        </BrowserRouter>
-      </Container>
-    </ThemeProvider>
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <BrowserRouter>
+            <Header title="Blog" sections={sections} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Culture" element={<Culture />} />
+              <Route path="/Tech" element={<Technolog />} />
+              <Route path="/Business" element={<Business />} />
+              <Route path="/Design" element={<Design />} />
+              <Route path="/Politics" element={<Politics />} />
+              <Route path="/Opinion" element={<Opinion />} />
+              <Route path="/Science" element={<Science />} />
+              <Route path="/Health" element={<Health />} />
+              <Route path="/Style" element={<Style />} />
+              <Route path="/Travel" element={<Travel />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/newblog" element={<CreateBlog />} />
+            </Routes>
+          </BrowserRouter>
+        </Container>
+      </ThemeProvider>
+    </AuthContext.Provider>
   );
 }
 
