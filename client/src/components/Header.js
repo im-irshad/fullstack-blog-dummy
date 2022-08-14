@@ -23,7 +23,17 @@ function Header({ sections, title }) {
   return (
     <Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Button size="small">My Blogs</Button>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ marginRight: "1%" }}
+          href="/myblogs"
+        >
+          My Blogs
+        </Button>
+        <Button variant="outlined" size="small" href="/newblog">
+          Add New Blog
+        </Button>
         <Typography
           component="h2"
           variant="h5"

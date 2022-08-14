@@ -21,6 +21,7 @@ import Health from "./pages/Health";
 import Style from "./pages/Style";
 import Travel from "./pages/Travel";
 import CreateBlog from "./pages/CreateBlog";
+import MyBlogs from "./pages/MyBlogs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
@@ -95,6 +96,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/newblog" element={<CreateBlog />} />
+              <Route path="/myblogs" element={<MyBlogs />} />
             </Routes>
           </BrowserRouter>
         </Container>

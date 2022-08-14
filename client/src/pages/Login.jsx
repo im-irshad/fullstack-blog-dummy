@@ -74,7 +74,7 @@ export default function Login() {
               values: { email: "", password: "" },
             });
             setOpen(true);
-            navigate("/");
+            window.location.href = "/";
           }
         });
     },
