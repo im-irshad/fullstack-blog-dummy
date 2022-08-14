@@ -10,6 +10,16 @@ function Header({ sections, title }) {
   const path = location.pathname;
   const { authState } = useContext(AuthContext);
   console.log(authState);
+
+  const handleClick = () => {
+    if (authState.status) {
+      localStorage.removeItem("token");
+      window.location.reload();
+    } else {
+      window.location.href = "/login";
+    }
+  };
+
   return (
     <Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -30,10 +40,10 @@ function Header({ sections, title }) {
           href="/login"
           sx={{ marginRight: "1%" }}
         >
-          Login
+          {authState && authState.status ? authState.email : "Login"}
         </Button>
-        <Button variant="outlined" size="small" href="signup">
-          Sign up
+        <Button variant="outlined" size="small" onClick={handleClick}>
+          {authState && authState.status ? "Logout" : "Signup"}
         </Button>
       </Toolbar>
       <Toolbar

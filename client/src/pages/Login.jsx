@@ -17,6 +17,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { Alert, Collapse, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -41,6 +42,7 @@ const theme = createTheme();
 export default function Login() {
   const [status, setStatus] = React.useState("");
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
@@ -62,6 +64,7 @@ export default function Login() {
           console.log(res);
           if (res.data.error) {
             setStatus(res.data.error);
+            setOpen(true);
           } else {
             setStatus("Login Successful");
             localStorage.setItem("token", res.data.token);
@@ -70,8 +73,9 @@ export default function Login() {
             action.resetForm({
               values: { email: "", password: "" },
             });
+            setOpen(true);
+            navigate("/");
           }
-          setOpen(true);
         });
     },
   });
