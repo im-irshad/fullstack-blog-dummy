@@ -28,10 +28,16 @@ function Header({ sections, title }) {
           size="small"
           sx={{ marginRight: "1%" }}
           href="/myblogs"
+          disabled={!authState.status}
         >
           My Blogs
         </Button>
-        <Button variant="outlined" size="small" href="/newblog">
+        <Button
+          variant="outlined"
+          size="small"
+          href="/newblog"
+          disabled={!authState.status}
+        >
           Add New Blog
         </Button>
         <Typography
