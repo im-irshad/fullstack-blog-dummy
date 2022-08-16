@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+
 function Header({ sections, title }) {
   const location = useLocation();
   const path = location.pathname;
@@ -37,8 +38,17 @@ function Header({ sections, title }) {
           size="small"
           href="/newblog"
           disabled={!authState.status}
+          sx={{ marginRight: "1%" }}
         >
           Add New Blog
+        </Button>
+        <Button
+          variant="outlined"
+          size="small"
+          href="/UpdateProfile"
+          disabled={!authState.status}
+        >
+          Update Profile
         </Button>
         <Typography
           component="h2"
@@ -46,6 +56,7 @@ function Header({ sections, title }) {
           color="inherit"
           align="center"
           sx={{ flex: 1 }}
+          href="/"
         >
           {title}
         </Typography>

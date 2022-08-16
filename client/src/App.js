@@ -27,6 +27,7 @@ import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
 
 const sections = [
+  { title: "Home", url: "/" },
   { title: "Technology", url: "./Tech" },
   { title: "Design", url: "./Design" },
   { title: "Culture", url: "./Culture" },
