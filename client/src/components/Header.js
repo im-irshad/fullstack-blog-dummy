@@ -45,7 +45,7 @@ function Header({ sections, title }) {
         <Button
           variant="outlined"
           size="small"
-          href="/UpdateProfile"
+          href="/updateprofile"
           disabled={!authState.status}
         >
           Update Profile
@@ -58,7 +58,7 @@ function Header({ sections, title }) {
           sx={{ flex: 1 }}
           href="/"
         >
-          {title}
+          {}
         </Typography>
 
         <Button

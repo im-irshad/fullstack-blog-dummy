@@ -25,6 +25,7 @@ import MyBlogs from "./pages/MyBlogs";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "./context/AuthContext";
+import UpdateProfile from "./pages/UpdateProfile";
 
 const sections = [
   { title: "Home", url: "/" },
@@ -70,18 +71,13 @@ function App() {
       });
   }, []);
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setAuthState({ email: "", id: 0, status: false });
-  };
-
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="lg">
           <BrowserRouter>
-            <Header title="Blog" sections={sections} />
+            <Header title={sections.title} sections={sections} />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/Culture" element={<Culture />} />
@@ -98,6 +94,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/newblog" element={<CreateBlog />} />
               <Route path="/myblogs" element={<MyBlogs />} />
+              <Route path="/updateprofile" element={<UpdateProfile />} />
             </Routes>
           </BrowserRouter>
         </Container>
