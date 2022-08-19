@@ -8,6 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Dialog, Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { ModelContext } from "../context/AuthContext";
+import Model1 from "../components/Model1";
 
 const style = {
   position: "absolute",
@@ -25,7 +27,11 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [createData("Frozen yoghurt", 159, 6.0, 24, 4.0)];
+const rows = [
+  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
+  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
+  createData("Eclair", 262, 16.0, 24, 6.0),
+];
 
 export default function MyBlogs() {
   const [open, setOpen] = React.useState(false);
@@ -77,29 +83,7 @@ export default function MyBlogs() {
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
                 <TableCell align="right">
-                  <div>
-                    <Button onClick={handleOpen}>Open modal</Button>
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style}>
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h6"
-                          component="h2"
-                        >
-                          Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                          Duis mollis, est non commodo luctus, nisi erat
-                          porttitor ligula.
-                        </Typography>
-                      </Box>
-                    </Modal>
-                  </div>
+                  <Model1 />
                 </TableCell>
               </TableRow>
             ))}
