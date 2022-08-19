@@ -93,7 +93,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
               <Route path="/newblog" element={<CreateBlog />} />
-              <Route path="/myblogs" element={<MyBlogs />} />
+              <Route path="/myblogs/:id" element={<MyBlogs />} />
               <Route path="/updateprofile" element={<UpdateProfile />} />
             </Routes>
           </BrowserRouter>

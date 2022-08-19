@@ -28,7 +28,7 @@ function Header({ sections, title }) {
           variant="outlined"
           size="small"
           sx={{ marginRight: "1%" }}
-          href="/myblogs"
+          href={"/myblogs/" + authState.id}
           disabled={!authState.status}
         >
           My Blogs
