@@ -39,12 +39,14 @@ export default function MyBlogs() {
   let { id } = useParams();
   console.log(id);
   const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
     axios.get(`http://localhost:5000/api/blogs/myblogs/${id}`).then((res) => {
       console.log(res.data);
+      setData(res.data);
     });
   }, [id]);
 
@@ -79,20 +81,20 @@ export default function MyBlogs() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {data.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {row.id}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.title}</TableCell>
+                <TableCell align="right">{row.description}</TableCell>
+                <TableCell align="right">{row.userId}</TableCell>
 
                 <TableCell align="right">
-                  <Model1 />
+                  <Model1 props={row} />
                 </TableCell>
               </TableRow>
             ))}

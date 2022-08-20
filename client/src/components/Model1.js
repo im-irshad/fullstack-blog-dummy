@@ -13,9 +13,11 @@ const style = {
   p: 4,
 };
 
-function Model1() {
+function Model1({ props }) {
+  console.log(props.id);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
 
   return (
@@ -28,11 +30,17 @@ function Model1() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+          <Typography variant="h6" component="h2">
+            Blog Id: {props.id}
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          <Typography variant="h6" component="h2">
+            Blog Title: {props.title}
+          </Typography>
+          <Typography variant="h6" component="h2">
+            Blog Description: {props.description}
+          </Typography>
+          <Typography variant="h6" component="h2">
+            Blog Writer: {props.userId}
           </Typography>
         </Box>
       </Modal>
