@@ -12,6 +12,7 @@ import { ModelContext } from "../context/AuthContext";
 import Model1 from "../components/Model1";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import MyBlogsModel from "../components/MyBlogsModel";
 
 const style = {
   position: "absolute",
@@ -94,7 +95,8 @@ export default function MyBlogs() {
                 <TableCell align="right">{row.userId}</TableCell>
 
                 <TableCell align="right">
-                  <Model1 props={row} />
+                  {/* <Model1 props={row} /> */}
+                  <MyBlogsModel props={row} />
                 </TableCell>
               </TableRow>
             ))}
