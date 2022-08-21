@@ -38,7 +38,7 @@ const rows = [
 
 export default function MyBlogs() {
   let { id } = useParams();
-  console.log(id);
+
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([]);
   const handleOpen = () => setOpen(true);
@@ -46,7 +46,6 @@ export default function MyBlogs() {
 
   React.useEffect(() => {
     axios.get(`http://localhost:5000/api/blogs/myblogs/${id}`).then((res) => {
-      console.log(res.data);
       setData(res.data);
     });
   }, [id]);

@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { Formik, useFormik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -38,22 +38,35 @@ const validationSchema = Yup.object({
 });
 
 function MyBlogsModel({ props }) {
-  console.log(props.id);
+  const savedValues = {
+    title: props.title,
+    description: props.description,
+    category: "",
+  };
+
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+
   const handleClose = () => setOpen(false);
   const [status, setStatus] = React.useState("");
   const [openNote, setOpenNote] = React.useState(true);
-
+  const [formValues, setFormValues] = React.useState({
+    title: "",
+    description: "",
+    category: "",
+  });
+  const handleOpen = () => {
+    setOpen(true);
+    setFormValues(savedValues);
+  };
   const formik = useFormik({
-    initialValues: {
-      title: props.title,
-      category: props.category,
-      description: props.description,
+    initialValues: savedValues || {
+      title: "",
+      description: "",
+      category: "",
     },
     validationSchema,
+    enableReinitialize: true,
     onSubmit: (values, action) => {
-      console.log(values);
       axios.post("http://localhost:5000/api/blogs/new", values).then((res) => {
         setStatus("Blog created successfully");
         action.resetForm({
@@ -63,7 +76,7 @@ function MyBlogsModel({ props }) {
       });
     },
   });
-  console.log(formik.values);
+
   return (
     <div>
       <Button onClick={handleOpen}>Open modal</Button>
