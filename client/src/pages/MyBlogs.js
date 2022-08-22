@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Button, Dialog, Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ModelContext } from "../context/AuthContext";
-import Model1 from "../components/Model1";
+
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import MyBlogsModel from "../components/MyBlogsModel";

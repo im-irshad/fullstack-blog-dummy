@@ -13,7 +13,7 @@ const style = {
   p: 4,
 };
 
-function Model1({ props }) {
+function ProfileUpdateModel({ props }) {
   console.log(props.id);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -50,4 +50,4 @@ function Model1({ props }) {
   );
 }
 
-export default Model1;
+export default ProfileUpdateModel;

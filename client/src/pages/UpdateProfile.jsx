@@ -1,7 +1,7 @@
 import { CssBaseline, Grid, Paper } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
-import Model1 from "../components/Model1";
+import ProfileUpdateModel from "../components/ProfileUpdateModel";
 
 function UpdateProfile() {
   return (
@@ -19,7 +19,7 @@ function UpdateProfile() {
           alignItems={"center"}
           mt={2}
         >
-          <Model1 props={{ name: "change Name " }} />
+          <ProfileUpdateModel props={{ name: "Update Name " }} />
         </Grid>
         <Grid
           item
@@ -32,7 +32,7 @@ function UpdateProfile() {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Model1 props={{ name: "change Email" }} />
+          <ProfileUpdateModel props={{ name: "Update Email" }} />
         </Grid>
 
         <Grid
@@ -46,7 +46,7 @@ function UpdateProfile() {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Model1 props={{ name: "change Password" }} />
+          <ProfileUpdateModel props={{ name: "Update Password" }} />
         </Grid>
       </Grid>
     </div>
