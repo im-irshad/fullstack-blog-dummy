@@ -22,7 +22,9 @@ function Model1({ props }) {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen} variant="outlined">
+        {props.name}
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
