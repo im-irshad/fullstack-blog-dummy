@@ -3,7 +3,8 @@ import { Container } from "@mui/system";
 import React from "react";
 import ProfileUpdateModel from "../components/ProfileUpdateModel";
 
-function UpdateProfile() {
+function UpdateProfile({ user }) {
+  console.log(user);
   return (
     <div>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -29,9 +30,11 @@ function UpdateProfile() {
           elevation={6}
           square
           display={"flex"}
+          flexDirection="column"
           justifyContent={"center"}
           alignItems={"center"}
         >
+          {user.email} <br />
           <ProfileUpdateModel props={{ name: "Update Email" }} />
         </Grid>
 

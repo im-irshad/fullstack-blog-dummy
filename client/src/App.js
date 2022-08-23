@@ -94,7 +94,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/newblog" element={<CreateBlog />} />
               <Route path="/myblogs/:id" element={<MyBlogs />} />
-              <Route path="/updateprofile" element={<UpdateProfile />} />
+              <Route
+                path="/updateprofile"
+                element={<UpdateProfile user={authState} />}
+              />
             </Routes>
           </BrowserRouter>
         </Container>

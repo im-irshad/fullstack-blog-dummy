@@ -1,4 +1,5 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { Field } from "formik";
 import React from "react";
 
 const style = {
@@ -32,18 +33,17 @@ function ProfileUpdateModel({ props }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            Blog Id: {props.id}
-          </Typography>
-          <Typography variant="h6" component="h2">
-            Blog Title: {props.title}
-          </Typography>
-          <Typography variant="h6" component="h2">
-            Blog Description: {props.description}
-          </Typography>
-          <Typography variant="h6" component="h2">
-            Blog Writer: {props.userId}
-          </Typography>
+          <Typography variant="h6">{props.name}</Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id={props.name}
+            label={props.name}
+            name={props.name}
+            autoComplete="email"
+            autoFocus
+          />
         </Box>
       </Modal>
     </div>
