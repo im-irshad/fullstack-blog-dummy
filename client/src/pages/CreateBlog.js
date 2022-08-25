@@ -1,8 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { useFormik } from "formik";
+import { Field, useFormik } from "formik";
 import * as Yup from "yup";
 import CloseIcon from "@mui/icons-material/Close";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import {
   Alert,
@@ -38,6 +40,7 @@ function CreateBlog() {
 
   const [status, setStatus] = React.useState("");
   const [open, setOpen] = React.useState(true);
+  const [body, setBody] = React.useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -149,7 +152,7 @@ function CreateBlog() {
                 </Select>
               </Grid>
               <Grid item xs={12} sm={12}>
-                <TextField
+                {/* <TextField
                   multiline
                   rows={8}
                   fullWidth
@@ -157,6 +160,22 @@ function CreateBlog() {
                   name="description"
                   onChange={formik.handleChange}
                   value={formik.values.description}
+                  error={
+                    formik.touched.description && formik.errors.description
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    formik.touched.description && formik.errors.description
+                  }/> */}
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <ReactQuill
+                  label="description"
+                  name="description"
+                  theme="snow"
+                  value={formik.values.description}
+                  onChange={(e) => (formik.values.description = e)}
                   error={
                     formik.touched.description && formik.errors.description
                       ? true
