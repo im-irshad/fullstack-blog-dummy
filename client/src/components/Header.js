@@ -1,10 +1,16 @@
 import React, { Fragment } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import { Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import "../header.css";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { red } from "@mui/material/colors";
+
+const linkClass = {
+  color: "red",
+  textDecoration: "none",
+};
 
 function Header({ sections, title }) {
   const location = useLocation();
@@ -81,15 +87,14 @@ function Header({ sections, title }) {
         {path !== "/signup" &&
           path !== "/login" &&
           sections.map((section) => (
-            <Link
+            <NavLink
               to={section.url}
               key={section.title}
-              color="inherit"
               variant="body2"
-              sx={{ p: 1, flexShrink: 0 }}
+              className={({ isActive }) => (isActive ? "link-active" : "link")}
             >
               {section.title}
-            </Link>
+            </NavLink>
           ))}
       </Toolbar>
     </Fragment>

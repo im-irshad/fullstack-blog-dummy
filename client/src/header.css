@@ -1,0 +1,36 @@
+nav {
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #3f51b5;
+  box-shadow: 0 5px 10px #ccc;
+}
+
+/* Basic styles for nav links */
+nav a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  text-decoration: none;
+}
+
+/* Specific styles for non-active links */
+.link {
+  color: white;
+}
+.link:hover {
+  color: black;
+  background: orange;
+}
+
+/* Specific styles for active links */
+.link-active {
+  color: black;
+  background: orange;
+}
+
+.content {
+  margin-top: 50px;
+  text-align: center;
+}
