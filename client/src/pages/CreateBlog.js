@@ -50,7 +50,6 @@ function CreateBlog() {
     },
     validationSchema,
     onSubmit: (values, action) => {
-      console.log(values);
       axios.post("http://localhost:5000/api/blogs/new", values).then((res) => {
         setStatus("Blog created successfully");
         console.log(status);
@@ -69,15 +68,11 @@ function CreateBlog() {
 
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
-            Add Blog
-          </Typography>
           {status && (
             <Collapse in={open}>
               <Alert
@@ -95,7 +90,7 @@ function CreateBlog() {
                 }
                 sx={{ mb: 2 }}
               >
-                Close me!
+                Block Created Succesfully!
               </Alert>
             </Collapse>
           )}
@@ -170,26 +165,36 @@ function CreateBlog() {
                   }/> */}
               </Grid>
               <Grid item xs={12} sm={12}>
-                <ReactQuill
-                  label="description"
-                  name="description"
-                  theme="snow"
-                  value={formik.values.description}
-                  onChange={(e) => (formik.values.description = e)}
-                  error={
-                    formik.touched.description && formik.errors.description
-                      ? true
-                      : false
-                  }
-                  helperText={
-                    formik.touched.description && formik.errors.description
-                  }
-                />
+                <Box>
+                  <ReactQuill
+                    style={{
+                      height: "500px",
+                      display: "inline-block",
+                      width: "100%",
+                    }}
+                    placeholder="Enter Blog Description"
+                    label="description"
+                    name="description"
+                    theme="snow"
+                    value={formik.values.description}
+                    onChange={(e) => (formik.values.description = e)}
+                    error={
+                      formik.touched.description && formik.errors.description
+                        ? true
+                        : false
+                    }
+                    helperText={
+                      formik.touched.description && formik.errors.description
+                    }
+                  />
+                </Box>
               </Grid>
             </Grid>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
+            <Box>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Container>
