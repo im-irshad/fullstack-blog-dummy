@@ -18,13 +18,14 @@ import { Formik, useFormik } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import CloseIcon from "@mui/icons-material/Close";
+import ReactQuill from "react-quill";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 600,
   bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
@@ -98,7 +99,7 @@ function MyBlogsModel({ props }) {
             }}
           >
             <Typography component="h1" variant="h5">
-              Add Blog
+              Edit Blog
             </Typography>
             {status && (
               <Collapse in={openNote}>
@@ -175,7 +176,7 @@ function MyBlogsModel({ props }) {
                   </Select>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <TextField
+                  {/* <TextField
                     multiline
                     rows={8}
                     fullWidth
@@ -183,6 +184,28 @@ function MyBlogsModel({ props }) {
                     name="description"
                     onChange={formik.handleChange}
                     value={formik.values.description}
+                    error={
+                      formik.touched.description && formik.errors.description
+                        ? true
+                        : false
+                    }
+                    helperText={
+                      formik.touched.description && formik.errors.description
+                    }
+                  /> */}
+                  <ReactQuill
+                    style={{
+                      height: "400px",
+                      display: "inline-block",
+                      width: "100%",
+                      overflow: "scroll",
+                    }}
+                    placeholder="Enter Blog Description"
+                    label="description"
+                    name="description"
+                    theme="snow"
+                    value={formik.values.description}
+                    onChange={(e) => (formik.values.description = e)}
                     error={
                       formik.touched.description && formik.errors.description
                         ? true
