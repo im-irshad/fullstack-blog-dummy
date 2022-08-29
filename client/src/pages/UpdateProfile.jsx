@@ -20,7 +20,7 @@ function UpdateProfile({ user }) {
           alignItems={"center"}
           mt={2}
         >
-          <ProfileUpdateModel props={{ name: "Update Name " }} />
+          <ProfileUpdateModel props={{ name: "Update Name" }} />
         </Grid>
         <Grid
           item
