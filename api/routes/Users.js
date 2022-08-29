@@ -33,11 +33,23 @@ router.get("/auth", validateToken, (req, res) => {
   res.json({ userId: req.user, email: req.email });
 });
 
-router.put("/update", (req, res) => {
-  console.log(req.body);
-  req.name && console.log("name");
-  req.email && console.log("email");
-  req.password && console.log("password");
+router.put("/update", async (req, res) => {
+  console.log(req.userId);
+  if (req.body.name) {
+    const updatedProfile = await Users.update(
+      {
+        name: req.body.name,
+      },
+      {
+        where: {
+          id: req.body.userId,
+        },
+      }
+    );
+  }
+
+  req.body.email && console.log("email");
+  req.body.password && console.log("password");
 });
 
 module.exports = router;

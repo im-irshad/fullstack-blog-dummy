@@ -20,7 +20,9 @@ function UpdateProfile({ user }) {
           alignItems={"center"}
           mt={2}
         >
-          <ProfileUpdateModel props={{ name: "Update Name" }} />
+          <ProfileUpdateModel
+            props={{ name: "Update Name", userId: user.id }}
+          />
         </Grid>
         <Grid
           item
@@ -35,7 +37,9 @@ function UpdateProfile({ user }) {
           alignItems={"center"}
         >
           {user.email} <br />
-          <ProfileUpdateModel props={{ name: "Update Email" }} />
+          <ProfileUpdateModel
+            props={{ name: "Update Email", userId: user.id }}
+          />
         </Grid>
 
         <Grid
@@ -49,7 +53,9 @@ function UpdateProfile({ user }) {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <ProfileUpdateModel props={{ name: "Update Password" }} />
+          <ProfileUpdateModel
+            props={{ name: "Update Password", userId: user.id }}
+          />
         </Grid>
       </Grid>
     </div>

@@ -15,7 +15,7 @@ const style = {
 };
 
 function ProfileUpdateModel({ props }) {
-  console.log(props.name.slice(7).toLowerCase());
+  console.log(props);
   const [open, setOpen] = React.useState(false);
   const [updateField, setUpdateField] = React.useState("");
   const handleOpen = () => {
@@ -27,6 +27,7 @@ function ProfileUpdateModel({ props }) {
     console.log(valueToUpdate);
     const res = await axios.put("http://localhost:5000/api/users/update", {
       [valueToUpdate]: updateField,
+      userId: props.userId,
     });
     const data = await res.JSON();
   };
