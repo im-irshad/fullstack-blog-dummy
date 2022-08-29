@@ -33,4 +33,11 @@ router.get("/auth", validateToken, (req, res) => {
   res.json({ userId: req.user, email: req.email });
 });
 
+router.put("/update", (req, res) => {
+  console.log(req.body);
+  req.name && console.log("name");
+  req.email && console.log("email");
+  req.password && console.log("password");
+});
+
 module.exports = router;

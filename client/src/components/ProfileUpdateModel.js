@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { Field } from "formik";
 import React from "react";
-
+import axios from "axios";
 const style = {
   position: "absolute",
   top: "50%",
@@ -15,11 +15,21 @@ const style = {
 };
 
 function ProfileUpdateModel({ props }) {
-  console.log(props.id);
+  console.log(props.name.slice(7).toLowerCase());
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-
+  const [updateField, setUpdateField] = React.useState("");
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const handleClose = () => setOpen(false);
+  const updateProfile = async () => {
+    const valueToUpdate = props.name.slice(7).toLowerCase();
+    console.log(valueToUpdate);
+    const res = await axios.put("http://localhost:5000/api/users/update", {
+      [valueToUpdate]: updateField,
+    });
+    const data = await res.JSON();
+  };
 
   return (
     <div>
@@ -41,9 +51,10 @@ function ProfileUpdateModel({ props }) {
             id={props.name}
             label={props.name}
             name={props.name}
-            autoComplete="email"
             autoFocus
+            onChange={(e) => setUpdateField(e.target.value)}
           />
+          <Button onClick={updateProfile}>Update</Button>
         </Box>
       </Modal>
     </div>
