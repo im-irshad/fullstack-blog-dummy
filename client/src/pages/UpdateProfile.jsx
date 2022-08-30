@@ -1,10 +1,9 @@
 import { CssBaseline, Grid, Paper } from "@mui/material";
 import { Container } from "@mui/system";
-import React from "react";
+import React, { useContext } from "react";
 import ProfileUpdateModel from "../components/ProfileUpdateModel";
 
 function UpdateProfile({ user }) {
-  console.log(user.name);
   return (
     <div>
       <Grid container component="main" sx={{ height: "100vh" }}>

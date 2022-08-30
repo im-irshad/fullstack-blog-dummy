@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import { Field } from "formik";
 import CloseIcon from "@mui/icons-material/Close";
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "../context/AuthContext";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -25,6 +27,8 @@ const style = {
 };
 
 function ProfileUpdateModel({ props }) {
+  const { authState, setAuthState } = useContext(AuthContext);
+  console.log(authState);
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [status, setStatus] = React.useState("");
@@ -39,7 +43,12 @@ function ProfileUpdateModel({ props }) {
       [valueToUpdate]: updateField,
       userId: props.userId,
     });
-    res.data.success && setOpen(false);
+    res.data.success &&
+      setAuthState({
+        ...authState,
+        [valueToUpdate]: updateField,
+      });
+    console.log(authState);
   };
 
   return (
