@@ -1,5 +1,15 @@
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Collapse,
+  IconButton,
+  Modal,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Field } from "formik";
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import axios from "axios";
 const style = {
@@ -15,8 +25,9 @@ const style = {
 };
 
 function ProfileUpdateModel({ props }) {
-  console.log(props);
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
+  const [status, setStatus] = React.useState("");
   const [updateField, setUpdateField] = React.useState("");
   const handleOpen = () => {
     setOpen(true);
@@ -24,12 +35,11 @@ function ProfileUpdateModel({ props }) {
   const handleClose = () => setOpen(false);
   const updateProfile = async () => {
     const valueToUpdate = props.name.slice(7).toLowerCase();
-    console.log(valueToUpdate);
     const res = await axios.put("http://localhost:5000/api/users/update", {
       [valueToUpdate]: updateField,
       userId: props.userId,
     });
-    const data = await res.JSON();
+    res.data.success && setOpen(false);
   };
 
   return (

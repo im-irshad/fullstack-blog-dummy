@@ -4,7 +4,7 @@ import React from "react";
 import ProfileUpdateModel from "../components/ProfileUpdateModel";
 
 function UpdateProfile({ user }) {
-  console.log(user);
+  console.log(user.name);
   return (
     <div>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -17,9 +17,11 @@ function UpdateProfile({ user }) {
           square
           display={"flex"}
           justifyContent={"center"}
+          flexDirection="column"
           alignItems={"center"}
           mt={2}
         >
+          {user.name}
           <ProfileUpdateModel
             props={{ name: "Update Name", userId: user.id }}
           />

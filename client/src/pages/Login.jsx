@@ -61,7 +61,6 @@ export default function Login() {
       axios
         .post("http://localhost:5000/api/users/login", values)
         .then((res) => {
-          console.log(res);
           if (res.data.error) {
             setStatus(res.data.error);
             setOpen(true);
@@ -69,7 +68,7 @@ export default function Login() {
             setStatus("Login Successful");
             localStorage.setItem("token", res.data.token);
 
-            console.log(res);
+            console.log(res.data.token);
             action.resetForm({
               values: { email: "", password: "" },
             });

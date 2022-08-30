@@ -15,9 +15,10 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await Users.findOne({ where: { email } });
+  console.log(user.name);
   if (user && (await bcrypt.compare(password, user.password))) {
     const token = sign(
-      { userId: user.id, email: user.email },
+      { name: user.name, userId: user.id, email: user.email },
       "secretdummykey",
       {
         expiresIn: "1h",
@@ -30,7 +31,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/auth", validateToken, (req, res) => {
-  res.json({ userId: req.user, email: req.email });
+  res.json({ userId: req.user, email: req.email, name: req.name });
 });
 
 router.put("/update", async (req, res) => {
@@ -46,6 +47,9 @@ router.put("/update", async (req, res) => {
         },
       }
     );
+    res.status(200).json({
+      success: true,
+    });
   }
 
   req.body.email && console.log("email");

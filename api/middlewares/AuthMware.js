@@ -9,9 +9,11 @@ const validateToken = (req, res, next) => {
   }
   try {
     const validToken = verify(token, "secretdummykey");
-    console.log(validToken.email);
+    console.log(validToken.name);
     req.user = validToken.userId;
     req.email = validToken.email;
+    req.name = validToken.name;
+
     if (validToken) {
       return next();
     }
