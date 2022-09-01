@@ -34,7 +34,7 @@ router.get("/auth", validateToken, (req, res) => {
   res.json({ userId: req.user, email: req.email, name: req.name });
 });
 
-router.put("/update", async (req, res) => {
+router.put("/update", validateToken, async (req, res) => {
   console.log(req.userId);
   if (req.body.name) {
     const updatedProfile = await Users.update(

@@ -1,4 +1,5 @@
 const express = require("express");
+const { validateToken } = require("../middlewares/AuthMware");
 const router = express.Router();
 const { Blogs } = require("../models");
 
@@ -7,7 +8,7 @@ router.get("/", async (req, res) => {
   res.json(listOfBlogs);
 });
 
-router.post("/new", async (req, res) => {
+router.post("/new", validateToken, async (req, res) => {
   const blog = req.body;
   await Blogs.create(blog);
   res.json(blog);
@@ -19,7 +20,7 @@ router.get("/:id", async (req, res) => {
   res.json(foundBlog);
 });
 
-router.get("/myblogs/:id", async (req, res) => {
+router.get("/myblogs/:id", validateToken, async (req, res) => {
   const userId = req.params.id;
   const foundBlogs = await Blogs.findAll({ where: { userId: userId } });
   res.json(foundBlogs);
