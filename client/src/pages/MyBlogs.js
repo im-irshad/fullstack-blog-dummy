@@ -47,6 +47,7 @@ export default function MyBlogs() {
   React.useEffect(() => {
     axios.get(`http://localhost:5000/api/blogs/myblogs/${id}`).then((res) => {
       setData(res.data);
+      console.log(data);
     });
   }, [id]);
 
