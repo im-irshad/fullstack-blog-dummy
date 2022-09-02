@@ -21,10 +21,15 @@ router.get("/:id", async (req, res) => {
   res.json(foundBlog);
 });
 
-router.get("/myblogs/:id", async (req, res) => {
-  const user = await Users.findOne({ where: { id: req.params.id } });
-  const userId = user.id;
-  const foundBlogs = await Blogs.findAll({ where: { userId: userId } });
+router.route("/myblogs/:id").get(validateToken, async (req, res) => {
+  console.log("try block");
+  // const user = await Users.findOne({ where: { id: req.params.id } });
+  // const userId = user.id;
+  // console.log(userId);
+  const foundBlogs = await Blogs.findAll({
+    where: { userId: req.params.id },
+  });
+
   res.json(foundBlogs);
 });
 

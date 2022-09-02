@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import { ModelContext } from "../context/AuthContext";
 
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MyBlogsModel from "../components/MyBlogsModel";
 
 const style = {
@@ -38,18 +38,29 @@ const rows = [
 
 export default function MyBlogs() {
   let { id } = useParams();
-
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   React.useEffect(() => {
-    axios.get(`http://localhost:5000/api/blogs/myblogs/${id}`).then((res) => {
-      setData(res.data);
-      console.log(data);
-    });
-  }, [id]);
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(`http://localhost:5000/api/blogs/myblogs/${id}`, {
+          headers: {
+            accessToken: localStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setData(res.data);
+          console.log(data);
+        });
+    }
+  }, []);
 
   return (
     <>
