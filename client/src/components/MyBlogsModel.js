@@ -60,27 +60,39 @@ function MyBlogsModel({ props }) {
     setFormValues(savedValues);
   };
   const formik = useFormik({
-    initialValues: savedValues || {
+    initialValues: formValues || {
       title: "",
       description: "",
       category: "",
     },
     validationSchema,
     enableReinitialize: true,
-    onSubmit: (values, action) => {
-      axios.post("http://localhost:5000/api/blogs/new", values).then((res) => {
-        setStatus("Blog created successfully");
-        action.resetForm({
-          values: { title: "", category: "category", description: "" },
+    onSubmit: (formValues, action) => {
+      console.log("form values .....", formValues);
+      axios
+        .put(`http://localhost:5000/api/blogs/update/${props.id}`, formValues)
+        .then((res) => {
+          setStatus("Blog updated successfully");
+          action.resetForm({
+            values: { title: "", category: "category", description: "" },
+          });
+          setOpenNote(true);
         });
-        setOpenNote(true);
-      });
     },
   });
 
+  const handleSubmit = () => {
+    console.log(formValues);
+    axios
+      .put(`http://localhost:5000/api/blogs/update/${props.id}`, formik.values)
+      .then((res) => {
+        setStatus("Blog updated successfully");
+        setOpenNote(true);
+      });
+  };
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>View/Edit Blog</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -92,7 +104,7 @@ function MyBlogsModel({ props }) {
 
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 2,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -118,16 +130,16 @@ function MyBlogsModel({ props }) {
                   }
                   sx={{ mb: 2 }}
                 >
-                  Close me!
+                  Blog Updated successfully!
                 </Alert>
               </Collapse>
             )}
             <Box
               component="form"
               noValidate
-              onSubmit={Formik.handleSubmit}
+              onSubmit={handleSubmit}
               sx={{
-                marginTop: 8,
+                marginTop: 2,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -195,7 +207,7 @@ function MyBlogsModel({ props }) {
                   /> */}
                   <ReactQuill
                     style={{
-                      height: "400px",
+                      height: "50vh",
                       display: "inline-block",
                       width: "100%",
                       overflow: "scroll",

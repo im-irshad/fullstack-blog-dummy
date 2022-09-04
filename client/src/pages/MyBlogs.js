@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import { ModelContext } from "../context/AuthContext";
 
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import MyBlogsModel from "../components/MyBlogsModel";
 
 const style = {
@@ -60,7 +60,7 @@ export default function MyBlogs() {
           console.log(data);
         });
     }
-  }, []);
+  }, [id, navigate]);
 
   return (
     <>

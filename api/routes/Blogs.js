@@ -33,4 +33,12 @@ router.route("/myblogs/:id").get(validateToken, async (req, res) => {
   res.json(foundBlogs);
 });
 
+router.put("/update/:id", async (req, res) => {
+  console.log(req.body);
+  const id = req.params.id;
+  const newValues = req.body;
+
+  // const updatedBlog = await Blogs.update({ newValues }, { where: { id: id } });
+  // res.json(updatedBlog);
+});
 module.exports = router;

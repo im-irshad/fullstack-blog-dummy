@@ -2,7 +2,7 @@ const { verify } = require("jsonwebtoken");
 
 const validateToken = (req, res, next) => {
   const token = req.header("accessToken");
-  console.log("token from req.header:", token);
+
   if (!token) {
     return res.status(401).json({ message: "Not login!!!!!!!!!!!!!!!!!!!!!" });
   }
@@ -14,7 +14,6 @@ const validateToken = (req, res, next) => {
     req.name = validToken.name;
 
     if (validToken) {
-      console.log("valid");
       return next();
     }
   } catch (err) {
